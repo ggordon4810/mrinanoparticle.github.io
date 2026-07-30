@@ -1,0 +1,136 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    New Experiment | NanoMRI
+{% endblock %}
+
+{% block main %}
+    <section class="page-header">
+        <h1>
+            Create a New Experiment
+        </h1>
+
+        <p>
+            Add a record for a nanoparticle synthesis, formulation,
+            relaxivity study, or DLS characterization experiment.
+        </p>
+    </section>
+
+    <section class="card">
+        <form
+            method="post"
+            action="{{ url_for('new_experiment') }}"
+            data-disable-on-submit
+        >
+            <div class="form-group">
+                <label for="name">
+                    Experiment Name
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    maxlength="150"
+                    required
+                    placeholder="Example: DSPE-PEG-DTPA-BSA(Gd) Formulation 1"
+                    value="{{ request.form.get('name', '') }}"
+                >
+
+                <small class="form-help">
+                    Use a name that will help you identify the experiment later.
+                </small>
+            </div>
+
+            <div class="form-group">
+                <label for="sample_type">
+                    Sample Type
+                </label>
+
+                <select
+                    id="sample_type"
+                    name="sample_type"
+                >
+                    <option value="">
+                        Select a sample type
+                    </option>
+
+                    <option
+                        value="Micelle"
+                        {% if request.form.get('sample_type') == 'Micelle' %}
+                            selected
+                        {% endif %}
+                    >
+                        Micelle
+                    </option>
+
+                    <option
+                        value="Liposome"
+                        {% if request.form.get('sample_type') == 'Liposome' %}
+                            selected
+                        {% endif %}
+                    >
+                        Liposome
+                    </option>
+
+                    <option
+                        value="Lipid Nanoparticle"
+                        {% if request.form.get('sample_type') == 'Lipid Nanoparticle' %}
+                            selected
+                        {% endif %}
+                    >
+                        Lipid Nanoparticle
+                    </option>
+
+                    <option
+                        value="Gadolinium Chelate"
+                        {% if request.form.get('sample_type') == 'Gadolinium Chelate' %}
+                            selected
+                        {% endif %}
+                    >
+                        Gadolinium Chelate
+                    </option>
+
+                    <option
+                        value="Other"
+                        {% if request.form.get('sample_type') == 'Other' %}
+                            selected
+                        {% endif %}
+                    >
+                        Other
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="description">
+                    Description
+                </label>
+
+                <textarea
+                    id="description"
+                    name="description"
+                    maxlength="2000"
+                    placeholder="Describe the formulation, materials, preparation method, or purpose of the experiment."
+                >{{ request.form.get('description', '') }}</textarea>
+            </div>
+
+            <div class="form-actions">
+                <button
+                    type="submit"
+                    class="button button-primary"
+                >
+                    Save Experiment
+                </button>
+
+                <a
+                    href="{{ url_for('experiments') }}"
+                    class="button button-secondary"
+                >
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </section>
+{% endblock %}

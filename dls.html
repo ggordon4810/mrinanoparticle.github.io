@@ -1,0 +1,266 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    DLS Analysis | NanoMRI
+{% endblock %}
+
+{% block main %}
+    <section class="page-header">
+        <h1>
+            DLS Analysis
+        </h1>
+
+        <p>
+            Enter dynamic light scattering measurements to evaluate
+            particle size, PDI, and agreement among reported distributions.
+        </p>
+    </section>
+
+    <section class="card">
+        <form
+            method="post"
+            action="{{ url_for('dls') }}"
+            data-disable-on-submit
+        >
+            <div class="form-group">
+                <label for="experiment_id">
+                    Experiment
+                </label>
+
+                <select
+                    id="experiment_id"
+                    name="experiment_id"
+                >
+                    <option value="">
+                        Do not attach to an experiment
+                    </option>
+
+                    {% for experiment in experiments %}
+                        <option
+                            value="{{ experiment['id'] }}"
+                            {% if selected_experiment_id|string == experiment['id']|string %}
+                                selected
+                            {% endif %}
+                        >
+                            {{ experiment["name"] }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="z_average_nm">
+                        Z-Average (nm)
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="number"
+                        id="z_average_nm"
+                        name="z_average_nm"
+                        min="0.000001"
+                        step="any"
+                        required
+                        value="{{ request.form.get('z_average_nm', '') }}"
+                    >
+
+                    <small class="form-help">
+                        Enter the cumulants mean hydrodynamic diameter.
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label for="pdi">
+                        Polydispersity Index
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="number"
+                        id="pdi"
+                        name="pdi"
+                        min="0"
+                        step="any"
+                        required
+                        value="{{ request.form.get('pdi', '') }}"
+                    >
+
+                    <small class="form-help">
+                        Enter the PDI reported by the DLS instrument.
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label for="intensity_size_nm">
+                        Intensity Size (nm)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="intensity_size_nm"
+                        name="intensity_size_nm"
+                        min="0.000001"
+                        step="any"
+                        value="{{ request.form.get('intensity_size_nm', '') }}"
+                    >
+
+                    <small class="form-help">
+                        Optional intensity-distribution peak size.
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label for="volume_size_nm">
+                        Volume Size (nm)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="volume_size_nm"
+                        name="volume_size_nm"
+                        min="0.000001"
+                        step="any"
+                        value="{{ request.form.get('volume_size_nm', '') }}"
+                    >
+
+                    <small class="form-help">
+                        Optional volume-distribution peak size.
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label for="number_size_nm">
+                        Number Size (nm)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="number_size_nm"
+                        name="number_size_nm"
+                        min="0.000001"
+                        step="any"
+                        value="{{ request.form.get('number_size_nm', '') }}"
+                    >
+
+                    <small class="form-help">
+                        Optional number-distribution peak size.
+                    </small>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button
+                    type="submit"
+                    class="button button-primary"
+                >
+                    Analyze DLS Data
+                </button>
+            </div>
+        </form>
+    </section>
+
+    {% if results %}
+        <section class="page-header">
+            <h2>
+                Analysis Results
+            </h2>
+        </section>
+
+        <section class="results-grid">
+            <div class="result-card">
+                <div class="result-label">
+                    Z-Average
+                </div>
+
+                <p class="result-value">
+                    {{ z_average_nm }}
+                </p>
+
+                <p class="text-muted">
+                    nm
+                </p>
+            </div>
+
+            <div class="result-card">
+                <div class="result-label">
+                    PDI
+                </div>
+
+                <p class="result-value">
+                    {{ pdi }}
+                </p>
+            </div>
+
+            <div class="result-card">
+                <div class="result-label">
+                    Recommended Value
+                </div>
+
+                <p class="result-value">
+                    {{ results["recommended_value"] }}
+                </p>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>
+                Interpretation
+            </h2>
+
+            <div class="interpretation">
+                {{ results["interpretation"] }}
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>
+                Entered Measurements
+            </h2>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Measurement</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>Z-Average</td>
+                            <td>{{ z_average_nm }} nm</td>
+                        </tr>
+
+                        <tr>
+                            <td>PDI</td>
+                            <td>{{ pdi }}</td>
+                        </tr>
+
+                        {% if intensity_size_nm is not none %}
+                            <tr>
+                                <td>Intensity Size</td>
+                                <td>{{ intensity_size_nm }} nm</td>
+                            </tr>
+                        {% endif %}
+
+                        {% if volume_size_nm is not none %}
+                            <tr>
+                                <td>Volume Size</td>
+                                <td>{{ volume_size_nm }} nm</td>
+                            </tr>
+                        {% endif %}
+
+                        {% if number_size_nm is not none %}
+                            <tr>
+                                <td>Number Size</td>
+                                <td>{{ number_size_nm }} nm</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="NanoMRI Research Suite for organizing nanoparticle experiments and analyzing relaxivity and DLS data."
+    >
+
+    <title>
+        {% block title %}
+            NanoMRI Research Suite
+        {% endblock %}
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+    {% block head %}
+    {% endblock %}
+</head>
+
+<body>
+    <header class="site-header">
+        <nav class="navbar">
+            <a
+                href="{{ url_for('index') }}"
+                class="site-logo"
+            >
+                NanoMRI
+            </a>
+
+            <button
+                type="button"
+                class="nav-toggle"
+                aria-label="Open navigation menu"
+                aria-expanded="false"
+            >
+                ☰
+            </button>
+
+            <ul class="nav-links">
+                <li>
+                    <a href="{{ url_for('index') }}">
+                        Dashboard
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ url_for('experiments') }}">
+                        Experiments
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ url_for('new_experiment') }}">
+                        New Experiment
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ url_for('relaxivity') }}">
+                        Relaxivity
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ url_for('dls') }}">
+                        DLS
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-container">
+                    {% for category, message in messages %}
+                        <div class="flash-message flash-{{ category }}">
+                            {{ message }}
+
+                            <button
+                                type="button"
+                                class="flash-close"
+                                aria-label="Close message"
+                            >
+                                ×
+                            </button>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block main %}
+        {% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>
+                NanoMRI Research Suite
+            </p>
+
+            <p class="text-muted">
+                Nanoparticle formulation, relaxivity, and DLS analysis.
+            </p>
+        </div>
+    </footer>
+
+    <script
+        src="{{ url_for('static', filename='script.js') }}"
+    ></script>
+
+    {% block scripts %}
+    {% endblock %}
+</body>
+</html>

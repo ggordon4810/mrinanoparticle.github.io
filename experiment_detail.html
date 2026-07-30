@@ -1,0 +1,200 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {{ experiment["name"] }} | NanoMRI
+{% endblock %}
+
+{% block main %}
+    <section class="page-header">
+        <h1>
+            {{ experiment["name"] }}
+        </h1>
+
+        <p>
+            Created {{ experiment["date_created"] }}
+        </p>
+    </section>
+
+    <section class="card">
+        <h2>
+            Experiment Information
+        </h2>
+
+        <p>
+            <strong>Sample Type:</strong>
+
+            {{ experiment["sample_type"] or "Not specified" }}
+        </p>
+
+        <p>
+            <strong>Description:</strong>
+        </p>
+
+        {% if experiment["description"] %}
+            <p>
+                {{ experiment["description"] }}
+            </p>
+        {% else %}
+            <p class="text-muted">
+                No description was provided.
+            </p>
+        {% endif %}
+
+        <div class="form-actions">
+            <a
+                href="{{ url_for(
+                    'relaxivity',
+                    experiment_id=experiment['id']
+                ) }}"
+                class="button button-primary"
+            >
+                Add Relaxivity Analysis
+            </a>
+
+            <a
+                href="{{ url_for(
+                    'dls',
+                    experiment_id=experiment['id']
+                ) }}"
+                class="button button-primary"
+            >
+                Add DLS Analysis
+            </a>
+
+            <a
+                href="{{ url_for('experiments') }}"
+                class="button button-secondary"
+            >
+                Back to Experiments
+            </a>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>
+            Relaxivity Results
+        </h2>
+
+        {% if relaxivity_results %}
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Relaxivity</th>
+                            <th>Intercept</th>
+                            <th>R²</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for result in relaxivity_results %}
+                            <tr>
+                                <td>
+                                    {{ "%.4f"|format(result["relaxivity"]) }}
+                                    mM⁻¹s⁻¹
+                                </td>
+
+                                <td>
+                                    {{ "%.4f"|format(result["intercept"]) }}
+                                    s⁻¹
+                                </td>
+
+                                <td>
+                                    {{ "%.4f"|format(result["r_squared"]) }}
+                                </td>
+
+                                <td>
+                                    {{ result["date_created"] }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <p>
+                    No relaxivity analyses have been saved for this experiment.
+                </p>
+
+                <a
+                    href="{{ url_for(
+                        'relaxivity',
+                        experiment_id=experiment['id']
+                    ) }}"
+                    class="button button-primary"
+                >
+                    Calculate Relaxivity
+                </a>
+            </div>
+        {% endif %}
+    </section>
+
+    <section class="card">
+        <h2>
+            DLS Results
+        </h2>
+
+        {% if dls_results %}
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Z-Average</th>
+                            <th>PDI</th>
+                            <th>Recommended Result</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for result in dls_results %}
+                            <tr>
+                                <td>
+                                    {{ "%.2f"|format(result["z_average_nm"]) }}
+                                    nm
+                                </td>
+
+                                <td>
+                                    {{ "%.3f"|format(result["pdi"]) }}
+                                </td>
+
+                                <td>
+                                    {{ result["recommended_value"] }}
+                                </td>
+
+                                <td>
+                                    {{ result["date_created"] }}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="4">
+                                    <strong>Interpretation:</strong>
+                                    {{ result["interpretation"] }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <p>
+                    No DLS analyses have been saved for this experiment.
+                </p>
+
+                <a
+                    href="{{ url_for(
+                        'dls',
+                        experiment_id=experiment['id']
+                    ) }}"
+                    class="button button-primary"
+                >
+                    Analyze DLS Data
+                </a>
+            </div>
+        {% endif %}
+    </section>
+{% endblock %}

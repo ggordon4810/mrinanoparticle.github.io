@@ -1,0 +1,348 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Relaxivity Analysis
+{% endblock %}
+
+{% block main %}
+<section class="page-header">
+    <h1>Relaxivity Analysis</h1>
+    <p>
+        Enter gadolinium concentration and T1 measurements to calculate
+        longitudinal relaxivity, the regression intercept, and R².
+    </p>
+</section>
+
+<section class="card">
+    <h2>Measurement Data</h2>
+
+    {% if error %}
+        <div class="error-message" role="alert">
+            {{ error }}
+        </div>
+    {% endif %}
+
+    <form method="post" action="{{ url_for('relaxivity') }}" id="relaxivity-form">
+        <div class="measurement-table-header">
+            <span>Concentration (mM)</span>
+            <span>T1 (ms)</span>
+            <span>Action</span>
+        </div>
+
+        <div id="measurement-rows">
+            <div class="measurement-row">
+                <div class="form-group">
+                    <label class="visually-hidden" for="concentration-1">
+                        Concentration 1
+                    </label>
+
+                    <input
+                        type="number"
+                        id="concentration-1"
+                        name="concentration"
+                        step="any"
+                        min="0"
+                        placeholder="Example: 0"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label class="visually-hidden" for="t1-1">
+                        T1 measurement 1
+                    </label>
+
+                    <input
+                        type="number"
+                        id="t1-1"
+                        name="t1"
+                        step="any"
+                        min="0.000001"
+                        placeholder="Example: 1000"
+                        required
+                    >
+                </div>
+
+                <button
+                    type="button"
+                    class="remove-measurement"
+                    aria-label="Remove measurement"
+                    disabled
+                >
+                    Remove
+                </button>
+            </div>
+
+            <div class="measurement-row">
+                <div class="form-group">
+                    <label class="visually-hidden" for="concentration-2">
+                        Concentration 2
+                    </label>
+
+                    <input
+                        type="number"
+                        id="concentration-2"
+                        name="concentration"
+                        step="any"
+                        min="0"
+                        placeholder="Example: 1"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label class="visually-hidden" for="t1-2">
+                        T1 measurement 2
+                    </label>
+
+                    <input
+                        type="number"
+                        id="t1-2"
+                        name="t1"
+                        step="any"
+                        min="0.000001"
+                        placeholder="Example: 500"
+                        required
+                    >
+                </div>
+
+                <button
+                    type="button"
+                    class="remove-measurement"
+                    aria-label="Remove measurement"
+                    disabled
+                >
+                    Remove
+                </button>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="button" id="add-measurement" class="secondary-button">
+                Add Measurement
+            </button>
+
+            <button type="submit" class="primary-button">
+                Calculate Relaxivity
+            </button>
+        </div>
+    </form>
+</section>
+
+{% if results %}
+<section class="card results-section">
+    <h2>Analysis Results</h2>
+
+    <div class="results-grid">
+        <div class="result-card">
+            <h3>Relaxivity</h3>
+            <p class="result-value">
+                {{ "%.4f"|format(results.relaxivity) }}
+            </p>
+            <p class="result-unit">mM⁻¹·s⁻¹</p>
+        </div>
+
+        <div class="result-card">
+            <h3>Intercept</h3>
+            <p class="result-value">
+                {{ "%.4f"|format(results.intercept) }}
+            </p>
+            <p class="result-unit">s⁻¹</p>
+        </div>
+
+        <div class="result-card">
+            <h3>R²</h3>
+            <p class="result-value">
+                {{ "%.4f"|format(results.r_squared) }}
+            </p>
+            <p class="result-unit">Goodness of fit</p>
+        </div>
+    </div>
+
+    <div class="equation-box">
+        <h3>Regression Equation</h3>
+        <p>
+            R1 =
+            {{ "%.4f"|format(results.relaxivity) }}
+            × concentration +
+            {{ "%.4f"|format(results.intercept) }}
+        </p>
+    </div>
+
+    {% if plot_url %}
+        <div class="plot-container">
+            <h3>Relaxivity Plot</h3>
+
+            <img
+                src="data:image/png;base64,{{ plot_url }}"
+                alt="Relaxivity regression plot"
+                class="analysis-plot"
+            >
+        </div>
+    {% endif %}
+
+    {% if results.measurements %}
+        <div class="table-container">
+            <h3>Calculated Measurements</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Concentration (mM)</th>
+                        <th>T1 (ms)</th>
+                        <th>R1 (s⁻¹)</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for measurement in results.measurements %}
+                        <tr>
+                            <td>
+                                {{ "%.4f"|format(measurement.concentration) }}
+                            </td>
+                            <td>
+                                {{ "%.4f"|format(measurement.t1) }}
+                            </td>
+                            <td>
+                                {{ "%.4f"|format(measurement.r1) }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+</section>
+{% endif %}
+
+<section class="card help-section">
+    <h2>Test Data</h2>
+
+    <p>Use these values to confirm that the calculator works:</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Concentration (mM)</th>
+                <th>T1 (ms)</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>0</td>
+                <td>1000</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>500</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>333.333</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p>
+        Expected results: relaxivity approximately 1.0000,
+        intercept approximately 1.0000, and R² approximately 1.0000.
+    </p>
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const addButton = document.getElementById("add-measurement");
+    const rowsContainer = document.getElementById("measurement-rows");
+
+    if (!addButton || !rowsContainer) {
+        return;
+    }
+
+    function updateRemoveButtons() {
+        const rows = rowsContainer.querySelectorAll(".measurement-row");
+        const removeButtons =
+            rowsContainer.querySelectorAll(".remove-measurement");
+
+        removeButtons.forEach(function (button) {
+            button.disabled = rows.length <= 2;
+        });
+    }
+
+    addButton.addEventListener("click", function () {
+        const rowNumber =
+            rowsContainer.querySelectorAll(".measurement-row").length + 1;
+
+        const row = document.createElement("div");
+        row.className = "measurement-row";
+
+        row.innerHTML = `
+            <div class="form-group">
+                <label
+                    class="visually-hidden"
+                    for="concentration-${rowNumber}"
+                >
+                    Concentration ${rowNumber}
+                </label>
+
+                <input
+                    type="number"
+                    id="concentration-${rowNumber}"
+                    name="concentration"
+                    step="any"
+                    min="0"
+                    placeholder="Concentration"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label
+                    class="visually-hidden"
+                    for="t1-${rowNumber}"
+                >
+                    T1 measurement ${rowNumber}
+                </label>
+
+                <input
+                    type="number"
+                    id="t1-${rowNumber}"
+                    name="t1"
+                    step="any"
+                    min="0.000001"
+                    placeholder="T1 in ms"
+                    required
+                >
+            </div>
+
+            <button
+                type="button"
+                class="remove-measurement"
+                aria-label="Remove measurement"
+            >
+                Remove
+            </button>
+        `;
+
+        rowsContainer.appendChild(row);
+        updateRemoveButtons();
+    });
+
+    rowsContainer.addEventListener("click", function (event) {
+        if (!event.target.classList.contains("remove-measurement")) {
+            return;
+        }
+
+        const rows = rowsContainer.querySelectorAll(".measurement-row");
+
+        if (rows.length > 2) {
+            event.target.closest(".measurement-row").remove();
+            updateRemoveButtons();
+        }
+    });
+
+    updateRemoveButtons();
+});
+</script>
+{% endblock %}
+

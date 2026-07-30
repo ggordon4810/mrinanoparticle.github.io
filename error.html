@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Error | NanoMRI
+{% endblock %}
+
+{% block main %}
+    <section class="page-header">
+        <h1>
+            Something went wrong
+        </h1>
+
+        <p>
+            The application could not complete your request.
+        </p>
+    </section>
+
+    <section class="card">
+        <div class="empty-state">
+            <h2>
+                {{ error_code or "Error" }}
+            </h2>
+
+            <p>
+                {{ error_message or "An unexpected error occurred." }}
+            </p>
+
+            <div class="form-actions">
+                <a
+                    href="{{ url_for('index') }}"
+                    class="button button-primary"
+                >
+                    Return to Dashboard
+                </a>
+
+                <a
+                    href="{{ url_for('experiments') }}"
+                    class="button button-secondary"
+                >
+                    View Experiments
+                </a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

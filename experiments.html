@@ -1,0 +1,107 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Experiments | NanoMRI
+{% endblock %}
+
+{% block main %}
+    <section class="page-header">
+        <h1>
+            Experiments
+        </h1>
+
+        <p>
+            View and manage your nanoparticle formulation and
+            characterization experiments.
+        </p>
+    </section>
+
+    <div class="form-actions">
+        <a
+            href="{{ url_for('new_experiment') }}"
+            class="button button-primary"
+        >
+            Create New Experiment
+        </a>
+    </div>
+
+    <section class="card">
+        {% if experiments %}
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Sample Type</th>
+                            <th>Description</th>
+                            <th>Date Created</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for experiment in experiments %}
+                            <tr>
+                                <td>
+                                    <strong>
+                                        {{ experiment["name"] }}
+                                    </strong>
+                                </td>
+
+                                <td>
+                                    {{ experiment["sample_type"] or "Not specified" }}
+                                </td>
+
+                                <td>
+                                    {% if experiment["description"] %}
+                                        {{ experiment["description"] }}
+                                    {% else %}
+                                        <span class="text-muted">
+                                            No description
+                                        </span>
+                                    {% endif %}
+                                </td>
+
+                                <td>
+                                    {{ experiment["date_created"] }}
+                                </td>
+
+                                <td>
+                                    <div class="table-actions">
+                                        <a
+                                            href="{{ url_for(
+                                                'experiment_detail',
+                                                experiment_id=experiment['id']
+                                            ) }}"
+                                            class="button button-secondary button-small"
+                                        >
+                                            View
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <h2>
+                    No experiments found
+                </h2>
+
+                <p>
+                    Create an experiment to begin saving your
+                    nanoparticle formulation and analysis results.
+                </p>
+
+                <a
+                    href="{{ url_for('new_experiment') }}"
+                    class="button button-primary"
+                >
+                    Create Experiment
+                </a>
+            </div>
+        {% endif %}
+    </section>
+{% endblock %}
