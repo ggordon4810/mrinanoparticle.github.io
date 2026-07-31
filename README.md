@@ -25,6 +25,25 @@
 #### - Has extra space for any observations and organizes in a consistent format
 
 ## Images
+## Dashboard
+
+![Dashboard](images/dashboard.jpg)
+
+## Experiment Log
+
+![Experiment Log](images/Experiments.jpg)
+
+## New Experiments
+
+![New Experiments](images/NewExperiment.jpg)
+
+## Relaxivity
+
+![Relaxivity](images/Relaxivity.jpg)
+
+## DLS
+
+![DLS](images/DLS.jpg)
 
 ## Running the Project Locally
 #### 1. Clone the repository
