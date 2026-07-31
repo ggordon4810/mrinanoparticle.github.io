@@ -11,7 +11,7 @@
 #### - Accepts multiple concentration and T1 measurements
 #### - Converts T1 into R1
 #### - Performs linear regression to calculate relaxivity
-## - Reports R^2 and intercept along with relaxivity
+#### - Reports R^2 and intercept along with relaxivity
 
 ## DLS Analysis
 #### DLS stands for dynamic light scattering and it measures the size of particles at three different sensitivities: intensity, number, and volume. The machine also automatically outputs a cumulative average of the three called a Z average.
@@ -23,6 +23,8 @@
 #### - Records experiment details
 #### - Organizes all samples in one place providing a centralized location for work
 #### - Has extra space for any observations and organizes in a consistent format
+
+## Images
 
 ## Running the Project Locally
 #### 1. Clone the repository
