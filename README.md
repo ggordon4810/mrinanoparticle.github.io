@@ -43,13 +43,16 @@
 #### Open the address shown in the terminal, usually:
 #### http://127.0.0.1:5000
 
+## Why I Made This Project
+#### During my research making gadolinium based contrast agents for the lymphatic system, I spent a lot of time measuring the size and relaxivity of particles. This required three different machines and multiple excel and word files and it felt very disorganized and hard to keep track of. I decided this project would be a good way to expand my scientific computing skills while also helping me streamline and organize my data. My projects means I no longer need to plot a graph to calculate relaxivity or calculate averages to get size, giving me more time to focus on making samples.
+
 ## Author
 
 #### Gabriella Gordon
 
 #### Materials Science student interested in research and development, biomedical materials, nanoparticle characterization, and scientific software.
 #### GitHub: ggordon4810
-#### LinkedIn: [Add LinkedIn profile](https://www.linkedin.com/in/gabriella-gordon-1a7b2536a/)
+#### LinkedIn: [Gabriella Gordon](https://www.linkedin.com/in/gabriella-gordon-1a7b2536a/)
 
 #### Video Demo:(https://youtu.be/aCn6nNfC89I)
 
