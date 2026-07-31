@@ -1,5 +1,5 @@
 
-# Nano MRI Lab Suite
+# [Nano MRI Lab Suite] (https://mrinanoparticle-github-io.onrender.com/)
 #### Video Demo:(https://youtu.be/aCn6nNfC89I)
 #### My project was designed to assist me with my research in a lab that focuses on making mri contrast agents. There are actually a few main problems that my project works to solve. 
 #### The first problem is that of organization. When you spend a lot of time in a lab, you make tens of hundreds of samples and no matter how good your organization skills are, you often get things confused. Creating a website that will store experiments and organize them for you so they are all in one place makes this easier. 
