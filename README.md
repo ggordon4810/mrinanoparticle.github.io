@@ -1,10 +1,58 @@
 
-# [Nano MRI Lab Suite] (https://mrinanoparticle-github-io.onrender.com/)
+# Nano MRI Lab Suite
+#### A Flask based web application for organizing and calculating nanoparticle analysis data.
+#### The application combines relaxivity analysis, dynamic light scattering interpretation and data organization to act as an almost personalized lab notebook for mri contrast agent research
+## Live Demo
+🚀 **[Launch MRI Nanoparticle Research Suite](https://mri-nanoparticle-research-suite.onrender.com)**
+## Features
+
+## Relaxivity Analysis
+#### Relaxivity is the metric used to determine how bright of a signal a contrast agent generates i.e. how effective the contrast agent is. It is calculated using concentration and time (T1) values to create R1 values which are plotted and the slope of the line is the relaxivity.
+## - Accepts multiple concentration and T1 measurements
+## - Converts T1 into R1
+## - Performs linear regression to calculate relaxivity
+## - Reports R^2 and intercept along with relaxivity
+
+## DLS Analysis
+#### DLS stands for dynamic light scattering and it measures the size of particles at three different sensitivities: intensity, number, and volume. The machine also automatically outputs a cumulative average of the three called a Z average.
+## - Evaluates polydispersity index
+## - Accepts four possible inputs four the size of the particles
+## - Outputs a report on the quality and size of the sample and makes recommendations for reporting data
+
+## Experiment Tracking
+## - Records experiment details
+## - Organizes all samples in one place providing a centralized location for work
+## - Has extra space for any observations and organizes in a consistent format
+
+#### Running the Project Locally
+## 1. Clone the repository
+## git clone PASTE-YOUR-REPOSITORY-URL-HERE
+## cd mri-nanoparticle-research-suite
+## 2. Create a virtual environment
+## On macOS or Linux:
+## python3 -m venv .venv
+## source .venv/bin/activate
+## On Windows:
+## python -m venv .venv
+## .venv\Scripts\activate
+## 3. Install the dependencies
+## pip install -r requirements.txt
+## 4. Start the application
+## python app.py
+## 5. Open the local website
+## Open the address shown in the terminal, usually:
+## http://127.0.0.1:5000
+
+#### Author
+
+## Gabbriella Gordon
+
+## Materials Science student interested in research and development, biomedical materials, nanoparticle characterization, and scientific software.
+## GitHub: ggordon4810
+## LinkedIn: [Add LinkedIn profile](https://www.linkedin.com/in/gabriella-gordon-1a7b2536a/)
+
 #### Video Demo:(https://youtu.be/aCn6nNfC89I)
-#### My project was designed to assist me with my research in a lab that focuses on making mri contrast agents. There are actually a few main problems that my project works to solve. 
-#### The first problem is that of organization. When you spend a lot of time in a lab, you make tens of hundreds of samples and no matter how good your organization skills are, you often get things confused. Creating a website that will store experiments and organize them for you so they are all in one place makes this easier. 
-#### Additionally,it helps keep track of two important measurements, relaxivity and size. Relaxivity is very important because it is the measurement that determines how effective a contrast agent is, how bright of a signal it creates. Normally when you calculate relaxivity you have to do it in an excel file because it requires tables and graphs. My project eliminates this challenge by calculating relaxivity for you. Not only does this mean the information is again now all in the same place, the relaxivity is saved directly to the experiment further helping with organization. This also takes away the need for me to do the graphing and calculating, which greatly streamlines the process and allows more time for me to make samples.
-#### Size is measured using something called a DLS (dynamic light scattering) machine, but the machine gives you multiple results. When you are in a rush it can be very tedious to have to take the time to average all the different measurements to determine which one is the best to report. The machine gives you measurements with different sensitivities to size, so you can have size measurements 100nm apart and it is up to you to determine which to pick. My project eliminates this need by making the decision for you and helping you decide which size to report.
+
 
 
 
