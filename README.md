@@ -2,8 +2,8 @@
 # Nano MRI Lab Suite
 #### A Flask based web application for organizing and calculating nanoparticle analysis data.
 #### The application combines relaxivity analysis, dynamic light scattering interpretation and data organization to act as an almost personalized lab notebook for mri contrast agent research
-## Live Demo
-🚀 **[Launch MRI Nanoparticle Research Suite](https://mri-nanoparticle-research-suite.onrender.com)**
+#### Video Demo
+🚀 **[Launch MRI Nanoparticle Research Suite](https://youtu.be/z-o3pjLUuyU)**
 ## Features
 
 ## Relaxivity Analysis
@@ -75,7 +75,7 @@
 #### GitHub: ggordon4810
 #### LinkedIn: [Gabriella Gordon](https://www.linkedin.com/in/gabriella-gordon-1a7b2536a/)
 
-#### Video Demo:(https://youtu.be/aCn6nNfC89I)
+
 
 
 
