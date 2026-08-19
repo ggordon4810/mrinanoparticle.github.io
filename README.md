@@ -29,9 +29,9 @@
 
 ![Dashboard](images/Dashboard.jpg)
 
-## Experiment Log
+## Experiments
 
-![Experiment Log](images/Experiments.jpg)
+![Experimens](images/Experiments.jpg)
 
 ## New Experiments
 
