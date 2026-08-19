@@ -27,7 +27,7 @@
 ## Images
 ## Dashboard
 
-![Dashboard](images/dashboard.jpg)
+![Dashboard](images/Dashboard.jpg)
 
 ## Experiment Log
 
