@@ -31,7 +31,7 @@
 
 ## Experiments
 
-![Experimens](images/Experiments.jpg)
+![Experiments](images/Experiments.jpg)
 
 ## New Experiments
 
