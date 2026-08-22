@@ -29,9 +29,6 @@
 
 ![Dashboard](images/Dashboard.jpg)
 
-## Experiments
-
-![Experiments](images/Experiments.jpg)
 
 ## New Experiments
 
